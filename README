@@ -1,0 +1,4 @@
+- is item.href any different than the show route for that item?
+- too bad routes doesn't give absolute urls...
+- make api discoverable through the browser
+- state machine like gem for describing the transitions?

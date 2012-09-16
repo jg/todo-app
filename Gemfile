@@ -34,5 +34,7 @@ gem 'unicorn'
 # Deploy with Capistrano
 gem 'capistrano'
 
+gem 'collection-json'
+
 # To use debugger
 # gem 'debugger'
