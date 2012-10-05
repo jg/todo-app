@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    tasks = Task.all
+    tasks = current_user.tasks
 
     json = CollectionJSON.generate_for(Routes['tasks#index']) do |builder|
       tasks.each do |task|
@@ -35,6 +35,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.find(params[:id])
   end
 end
