@@ -7,7 +7,10 @@ class TasksController < ApplicationController
         builder.add_item(Routes['tasks#show'].(task.id)) do |item|
           item.add_data("id", value: task.id)
           item.add_data("title", value: task.title)
-          item.add_data("description", value: task.description)
+          item.add_data("created_at", value: task.created_at)
+          item.add_data("updated_at", value: task.updated_at)
+          item.add_data("priority", value: task.priority)
+          item.add_data("due", value: task.due)
 
           item.add_link(Routes['tasks#destroy'].(task.id), 'destroy')
           item.add_link(Routes['tasks#create'].(task.id), 'add')
