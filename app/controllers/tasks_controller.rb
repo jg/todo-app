@@ -9,6 +9,7 @@ class TasksController < ApplicationController
           item.add_data("title", value: task.title)
           item.add_data("created_at", value: task.created_at)
           item.add_data("updated_at", value: task.updated_at)
+          item.add_data("completed_at", value: task.completed_at)
           item.add_data("priority", value: task.priority)
           item.add_data("due", value: task.due)
 
@@ -45,6 +46,7 @@ class TasksController < ApplicationController
           item.add_data("title", value: task.title)
           item.add_data("created_at", value: task.created_at)
           item.add_data("updated_at", value: task.updated_at)
+          item.add_data("completed_at", value: task.completed_at)
           item.add_data("priority", value: task.priority)
           item.add_data("due", value: task.due)
 
