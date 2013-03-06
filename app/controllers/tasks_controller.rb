@@ -11,7 +11,10 @@ class TasksController < ApplicationController
           item.add_data("updated_at", value: task.updated_at)
           item.add_data("completed_at", value: task.completed_at)
           item.add_data("priority", value: task.priority)
-          item.add_data("due", value: task.due)
+          item.add_data("due_date", value: task.due_date)
+          item.add_data("due_time", value: task.due_time)
+          item.add_data("repeat", value: task.repeat)
+          item.add_data("task_list", value: task.task_list)
 
           item.add_link(Routes['tasks#destroy'].(task.id), 'destroy')
           item.add_link(Routes['tasks#create'].(task.id), 'add')
@@ -21,8 +24,14 @@ class TasksController < ApplicationController
 
         builder.set_template do |template|
           template.add_data("title", prompt: "task title")
-          template.add_data("description", prompt: "task description")
           template.add_data("priority", prompt: "task priority")
+          template.add_data("task_list", prompt: "task priority")
+          template.add_data("completed_at", prompt: "completed_at")
+          template.add_data("updated_at", prompt: "updated_at")
+          template.add_data("created_at", prompt: "created_at")
+          template.add_data("due_date", prompt: "due_date")
+          template.add_data("due_time", prompt: "due time")
+          template.add_data("repeat", prompt: "repeat")
         end
       end
 
@@ -48,7 +57,10 @@ class TasksController < ApplicationController
           item.add_data("updated_at", value: task.updated_at)
           item.add_data("completed_at", value: task.completed_at)
           item.add_data("priority", value: task.priority)
-          item.add_data("due", value: task.due)
+          item.add_data("due_date", value: task.due_date)
+          item.add_data("due_time", value: task.due_time)
+          item.add_data("repeat", value: task.repeat)
+          item.add_data("task_list", value: task.task_list)
 
           item.add_link(Routes['tasks#destroy'].(task.id), 'destroy')
           item.add_link(Routes['tasks#create'].(task.id), 'add')
@@ -58,8 +70,14 @@ class TasksController < ApplicationController
 
         builder.set_template do |template|
           template.add_data("title", prompt: "task title")
-          template.add_data("description", prompt: "task description")
           template.add_data("priority", prompt: "task priority")
+          template.add_data("task_list", prompt: "task priority")
+          template.add_data("completed_at", prompt: "completed_at")
+          template.add_data("updated_at", prompt: "updated_at")
+          template.add_data("created_at", prompt: "created_at")
+          template.add_data("due_date", prompt: "due_date")
+          template.add_data("due_time", prompt: "due time")
+          template.add_data("repeat", prompt: "repeat")
         end
       end
     end.to_json
