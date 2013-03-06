@@ -39,21 +39,35 @@ class TasksController < ApplicationController
   end
 
   def create
-    task = Task.new.tap do |t|
-      # assign accepted keys to Task instance
-      task_params = params['task']
-      (task_params.keys & Task.accepted_params.keys).each do |key|
-        t.send("#{key}=".to_sym, task_params[key])
-      end
-      # assign user
-      t.user = current_user
-    end
+    task = Task.from_params(params)
+    task.user = current_user
 
     respond_to do |format|
-      if task.save
-        format.json { render :status => 201, :text => "OK"}
+      # found 'same' task in db
+      if server_task = Task.where("date(created_at) = ?", task.created_at).first
+        # POSTed task has been updated more recently
+        debugger
+        if task.updated_at > server_task.updated_at
+          # update attributes on server
+          task.attributes.each do |k,v|
+            server_task.update_attribute(k, v) if k != "id"
+          end
+          if server_task.save
+            format.json { render :status => 201, :text => "OK"}
+          else
+            format.json {render :status => 400, :text => "OK"}
+          end
+        else
+          # no change
+          format.json {render :status => 200, :text => "OK"}
+        end
       else
-        format.json {render :status => 400, :text => "OK"}
+        # client POSTed a new task, save it
+        if task.save
+          format.json { render :status => 201, :text => "OK"}
+        else
+          format.json {render :status => 400, :text => "OK"}
+        end
       end
     end
   end

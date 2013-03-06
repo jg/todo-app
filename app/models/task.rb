@@ -22,4 +22,14 @@ class Task < ActiveRecord::Base
     }
   end
 
+  def self.from_params(params)
+    task = Task.new.tap do |t|
+      # assign accepted keys to Task instance
+      task_params = params['task']
+      (task_params.keys & accepted_params.keys).each do |key|
+        t.send("#{key}=".to_sym, task_params[key])
+      end
+    end
+  end
+
 end
