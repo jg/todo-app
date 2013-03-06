@@ -1,10 +1,6 @@
 TodoApp::Application.routes.draw do
   root :to => 'main#index'
-  resources :tasks, :defaults => { :format => :json } do
-    collection do
-      get 'completed'
-    end
-  end
+  resources :tasks, :defaults => { :format => :json } 
   resources :users, :defaults => { :format => :json }
 
   # The priority is based upon order of creation:
