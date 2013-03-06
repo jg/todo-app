@@ -37,4 +37,4 @@ gem 'capistrano'
 gem 'collection-json'
 
 # To use debugger
-# gem 'debugger'
+ gem 'debugger'
