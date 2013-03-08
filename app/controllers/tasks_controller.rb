@@ -46,7 +46,6 @@ class TasksController < ApplicationController
       # found 'same' task in db
       if server_task = Task.where("date(created_at) = ?", task.created_at).first
         # POSTed task has been updated more recently
-        debugger
         if task.updated_at > server_task.updated_at
           # update attributes on server
           task.attributes.each do |k,v|
