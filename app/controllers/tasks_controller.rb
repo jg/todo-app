@@ -23,11 +23,11 @@ class TasksController < ApplicationController
         end
 
 
-        builder.set_template do |template|
-          Task.accepted_params.each {|k,v| template.add_data(k, prompt: v) }
-        end
       end
 
+      builder.set_template do |template|
+        Task.accepted_params.each {|k,v| template.add_data(k, prompt: v) }
+      end
       # builder.add_query(Routes['tasks#completed'], "completed", prompt: "completed tasks") do |query|
       # end
     end.to_json
