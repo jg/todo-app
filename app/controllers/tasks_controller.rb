@@ -2,7 +2,7 @@ class TasksController < ApplicationController
 
   def fmt(datetime)
     if datetime
-      fmt = "%Y-%m-%dT%H:%M:%S.%5N"
+      fmt = "%Y-%m-%dT%H:%M:%S.%3N"
       datetime.strftime(fmt)
     end
   end
