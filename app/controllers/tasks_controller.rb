@@ -1,5 +1,12 @@
 class TasksController < ApplicationController
 
+  def fmt(datetime)
+    if datetime
+      fmt = "%Y-%m-%dT%H:%M:%S%L"
+      datetime.strftime(fmt)
+    end
+  end
+
   def index
     tasks = current_user.tasks
 
@@ -8,11 +15,11 @@ class TasksController < ApplicationController
         builder.add_item(Routes['tasks#show'].(task.id)) do |item|
           item.add_data("id", value: task.id)
           item.add_data("title", value: task.title)
-          item.add_data("created_at", value: task.created_at)
-          item.add_data("updated_at", value: task.updated_at)
-          item.add_data("completed_at", value: task.completed_at)
+          item.add_data("created_at", value: fmt(task.created_at))
+          item.add_data("updated_at", value: fmt(task.updated_at))
+          item.add_data("completed_at", value: fmt(task.completed_at))
+          item.add_data("due_date", value: fmt(task.due_date))
           item.add_data("priority", value: task.priority)
-          item.add_data("due_date", value: task.due_date)
           item.add_data("due_time", value: task.due_time)
           item.add_data("repeat", value: task.repeat)
           item.add_data("task_list", value: task.task_list)
@@ -21,8 +28,6 @@ class TasksController < ApplicationController
           item.add_link(Routes['tasks#create'].(task.id), 'add')
           item.add_link(Routes['tasks#edit'].(task.id), 'edit')
         end
-
-
       end
 
       builder.set_template do |template|
