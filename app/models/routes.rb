@@ -9,7 +9,7 @@ module Routes
     opts = {
       :controller => controller,
       :action => action,
-      :host => 'polar-scrubland-5755.herokuapp.com'
+      :host => host
     }
 
     case action
@@ -19,6 +19,14 @@ module Routes
         }
         else
           url_helpers.url_for(opts)
+    end
+  end
+
+  def self.host
+    if ENV['RAILS_ENV'] == 'development'
+      '192.168.0.13:3000'
+    else
+      'polar-scrubland-5755.herokuapp.com'
     end
   end
 end

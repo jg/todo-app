@@ -12,7 +12,11 @@ development:
   host: localhost
 
 test:
-  <<: *defaults
+  adapter: postgresql
+  encoding: unicode
+  username: todo
+  password: testtest
   database: todo_test
-  min_messages: error
+  host: localhost
+  port: 5432
 
