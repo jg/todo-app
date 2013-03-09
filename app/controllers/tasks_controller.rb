@@ -44,7 +44,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       # found 'same' task in db
-      if server_task = Task.where("date(created_at) = ?", task.created_at).first
+      if server_task = current_user.tasks.where("date(created_at) = ?", task.created_at).first
         # POSTed task has been updated more recently
         if task.updated_at > server_task.updated_at
           # update attributes on server
@@ -54,18 +54,18 @@ class TasksController < ApplicationController
           if server_task.save
             format.json { render :status => 201, :text => "OK"}
           else
-            format.json {render :status => 400, :text => "OK"}
+            format.json {render :status => 400, :text => "ERROR"}
           end
         else
           # no change
-          format.json {render :status => 200, :text => "OK"}
+          format.json {render :status => 200, :text => "UNCHANGED"}
         end
       else
         # client POSTed a new task, save it
         if task.save
           format.json { render :status => 201, :text => "OK"}
         else
-          format.json {render :status => 400, :text => "OK"}
+          format.json {render :status => 400, :text => "ERROR"}
         end
       end
     end
