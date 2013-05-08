@@ -1,5 +1,6 @@
 TodoApp::Application.routes.draw do
   root :to => 'main#index'
+  match '/tasks/completed' => 'tasks#completed'
   resources :tasks, :defaults => { :format => :json } 
   resources :users, :defaults => { :format => :json }
 

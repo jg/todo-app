@@ -7,6 +7,38 @@ class TasksController < ApplicationController
     end
   end
 
+  def completed
+    tasks = current_user.tasks.completed
+
+    json = CollectionJSON.generate_for('/tasks/completed') do |builder|
+      tasks.each do |task|
+        builder.add_item(Routes['tasks#show'].(task.id)) do |item|
+          item.add_data("id", value: task.id)
+          item.add_data("title", value: task.title)
+          item.add_data("created_at", value: fmt(task.created_at))
+          item.add_data("updated_at", value: fmt(task.updated_at))
+          item.add_data("completed_at", value: fmt(task.completed_at))
+          item.add_data("due_date", value: fmt(task.due_date))
+          item.add_data("priority", value: task.priority)
+          item.add_data("due_time", value: task.due_time)
+          item.add_data("repeat", value: task.repeat)
+          item.add_data("task_list", value: task.task_list)
+
+          item.add_link(Routes['tasks#destroy'].(task.id), 'destroy')
+          item.add_link(Routes['tasks#create'].(task.id), 'add')
+          item.add_link(Routes['tasks#edit'].(task.id), 'edit')
+        end
+      end
+
+      builder.set_template do |template|
+        Task.accepted_params.each {|k,v| template.add_data(k, prompt: v) }
+      end
+    end.to_json
+
+
+    render :json => json
+  end
+
   def index
     tasks = current_user.tasks
 
@@ -33,8 +65,9 @@ class TasksController < ApplicationController
       builder.set_template do |template|
         Task.accepted_params.each {|k,v| template.add_data(k, prompt: v) }
       end
-      # builder.add_query(Routes['tasks#completed'], "completed", prompt: "completed tasks") do |query|
-      # end
+
+      builder.add_query(Routes['tasks#completed'], "completed", prompt: "completed tasks") do |query|
+      end
     end.to_json
 
 
